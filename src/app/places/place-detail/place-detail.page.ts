@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router'
+import { Place } from '../place.model';
+import { PlacesService } from '../places.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-place-detail',
@@ -7,9 +11,38 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlaceDetailPage implements OnInit {
 
-  constructor() { }
+  place: Place
+  constructor(private activatedroute: ActivatedRoute, private placesService: PlacesService, 
+    private router: Router, private alertCtrl: AlertController) { }
 
   ngOnInit() {
+    this.activatedroute.paramMap.subscribe(paramMap => {
+      //redirect
+      const recipeId = paramMap.get('placeId')
+      this.placesService.getPlace(recipeId);
+      this.place = this.placesService.getPlace(recipeId);
+      console.log(this.place)
+    })
   }
 
+  async deletePlace(){
+    const alertElement = await this.alertCtrl.create({
+      header: 'Are you sure, you want to delete it?',
+      message: 'Be careful',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.placesService.deletePlace(this.place.id);
+            this.router.navigate(['/places']);
+          }
+        }
+      ]
+    });
+    await alertElement.present();
+  }
 }

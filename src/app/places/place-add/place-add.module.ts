@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { PlacesPageRoutingModule } from './places-routing.module';
-import { PlacesPage } from './places.page';
+
+import { PlaceAddPageRoutingModule } from './place-add-routing.module';
+
+import { PlaceAddPage } from './place-add.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PlacesPageRoutingModule
+    PlaceAddPageRoutingModule
   ],
-  declarations: [PlacesPage]
+  declarations: [PlaceAddPage]
 })
-export class PlacesPageModule {}
+export class PlaceAddPageModule {}
